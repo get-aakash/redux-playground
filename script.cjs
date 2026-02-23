@@ -1,3 +1,7 @@
+
+const redux = require('redux')
+const createStore = redux.createStore
+
 const ORDER_PIZZA = "ORDER_PIZZA"
 
 //Action
@@ -19,7 +23,7 @@ function orderPizza() {
 
 const initialState = {
     pizzaBase: 100,
-    toppings: ['cheese' , 'capsicum']
+   
 }
 
 const reducer = (state = initialState, action)=>{
@@ -27,10 +31,24 @@ const reducer = (state = initialState, action)=>{
         case ORDER_PIZZA:
             return {
                 ...state,
-                pizzaBase: pizzaBase-1
+                pizzaBase: state.pizzaBase-1
             }
             default:
                 return state
     }
     
 }
+
+//Store
+
+const store = createStore(reducer)
+
+console.log(store.getState());
+//register  listeners via subscribe
+store.subscribe(()=>console.log("Updated state", store.getState()))
+//dispatch action
+
+store.dispatch(
+   orderPizza()
+    
+)
